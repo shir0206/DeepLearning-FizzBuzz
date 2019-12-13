@@ -1,14 +1,9 @@
-# Fizz Buzz in Tensorflow!
-# see http://joelgrus.com/2016/05/23/fizz-buzz-in-tensorflow/
-
 import numpy as np
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 import matplotlib
 matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
-import math
 
 print("Deep Learning - Ex01 - Q02 + Q03")
 
@@ -32,7 +27,6 @@ def fizz_buzz_result(i):
     elif i % 5  == 0: return 'buzz'
     elif i % 3  == 0: return 'fizz'
     else:             return i
-
 
 def check_digit(i):
     if str.isdigit(i): return 'Digit'
@@ -117,18 +111,16 @@ with tf.compat.v1.Session() as sess:
 
     print("\nOutput #02 & #03: \n", output)
 
-    the_true = np.array([fizz_buzz_result(i) for i in range(1, 101)])
+    the_correct = np.array([fizz_buzz_result(i) for i in range(1, 101)])
 
 # Check output result vs correct result and print the classifier accuracy
 check_result = np.frompyfunc(check_digit, 1, 1)
 
 output_result = check_result(np.array(output))
-correct_result = check_result(np.array(the_true))
+correct_result = check_result(np.array(the_correct))
 
 print("\nThe Classifier Accuracy: " + str(accuracy_score(correct_result, output_result)))
 
 # Generate confusion matrix
 conf_matrix = confusion_matrix(correct_result, output_result)
 print("\nConfusion Matrix:\n", str(conf_matrix))
-
-

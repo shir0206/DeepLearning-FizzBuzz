@@ -1,6 +1,3 @@
-# Fizz Buzz in Tensorflow!
-# see http://joelgrus.com/2016/05/23/fizz-buzz-in-tensorflow/
-
 import numpy as np
 import tensorflow as tf
 
@@ -21,13 +18,11 @@ def fizz_buzz_encode(i):
     elif i % 3  == 0: return np.array([0, 1, 0, 0])
     else:             return np.array([1, 0, 0, 0])
 
-
 def fizz_buzz_ground_truth(i):
     if   i % 15 == 0: return 'fizzbuzz'
     elif i % 5  == 0: return 'buzz'
     elif i % 3  == 0: return 'fizz'
     else:             return i
-
 
 # Generate training data.
 # Our goal is to produce fizzbuzz for the numbers 1 to 100.

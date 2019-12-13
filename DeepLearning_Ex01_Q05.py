@@ -1,6 +1,3 @@
-# Fizz Buzz in Tensorflow!
-# see http://joelgrus.com/2016/05/23/fizz-buzz-in-tensorflow/
-
 import numpy as np
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
@@ -8,7 +5,6 @@ from sklearn.metrics import confusion_matrix
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import math
 
 print("Deep Learning - Ex01 - Q05")
 
@@ -32,7 +28,6 @@ def fizz_buzz_result(i):
     elif i % 5  == 0: return 'buzz'
     elif i % 3  == 0: return 'fizz'
     else:             return i
-
 
 def check_digit(i):
     if str.isdigit(i): return 'Digit'
@@ -59,19 +54,12 @@ def model(X, w_h, w_o):
     h = tf.nn.relu(tf.matmul(X, w_h))
     return tf.matmul(h, w_o)
 
-
 # Our variables. The input has width NUM_DIGITS, and the output has width 4.
 X = tf.compat.v1.placeholder("float", [None, NUM_DIGITS])
 Y = tf.compat.v1.placeholder("float", [None, 4])
 
 # How many units in the hidden layer.
-NUM_HIDDEN = 100
-
-# Initialize the weights.
-# w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])
-# w_o = init_weights([NUM_HIDDEN, 4])
-
-
+NUM_HIDDEN = 200
 
 # Initialize the weights.
 w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])
@@ -93,7 +81,7 @@ def fizz_buzz(i, prediction):
     return [str(i), "fizz", "buzz", "fizzbuzz"][prediction]
 
 # Each epoch we'll train in batches of 128 inputs
-BATCH_SIZE = 20
+BATCH_SIZE = 30
 
 # Train the model.
 # Launch the graph in a session
@@ -104,7 +92,7 @@ with tf.compat.v1.Session() as sess:
 
     # 1000 epochs of training
     # Epoch = Going once through the entire training data.
-    for epoch in range(100000):
+    for epoch in range(30000):
         # Shuffle the data before each training iteration.
         p = np.random.permutation(range(len(trX)))
         trX, trY = trX[p], trY[p]
@@ -123,7 +111,7 @@ with tf.compat.v1.Session() as sess:
     teY = sess.run(predict_op, feed_dict={X: teX})
     output = np.vectorize(fizz_buzz)(numbers, teY)
 
-    print("\nOutput #04: \n", output)
+    print("\nOutput #05: \n", output)
 
     the_true = np.array([fizz_buzz_result(i) for i in range(1, 101)])
 
@@ -139,10 +127,7 @@ print("\nThe Classifier Accuracy: " + str(accuracy_score(correct_result, output_
 conf_matrix = confusion_matrix(correct_result, output_result)
 print("\nConfusion Matrix:\n", str(conf_matrix))
 
-
 labels = ['Number', 'fizz', 'buzz', 'fizzbuzz']
-#cm = confusion_matrix(correct_result, output_result, labels)
-#print(cm)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cax = ax.matshow(conf_matrix)
